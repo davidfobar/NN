@@ -1,16 +1,20 @@
-SOURCES=$(wildcard *.cpp)
-OBJECTS=$(SOURCES:.cpp=.o)
-DEPS=$(SOURCES:.cpp=.d)
-BINS=$(SOURCES:.cpp=)
+# Declaration of variables
+CC = g++
+CC_FLAGS = -w
 
-CFLAGS+=-MMD
-CXXFLAGS+=-MMD
+# File names
+EXEC = run
+SOURCES = $(wildcard *.cpp)
+OBJECTS = $(SOURCES:.cpp=.o)
 
-all: $(BINS)
+# Main target
+$(EXEC): $(OBJECTS)
+	$(CC) $(OBJECTS) -o $(EXEC)
 
-.PHONY: clean
+# To obtain object files
+%.o: %.cpp
+	$(CC) -c $(CC_FLAGS) $< -o $@
 
+# To remove generated files
 clean:
-	$(RM) $(OBJECTS) $(DEPS) $(BINS)
-
--include $(DEPS)
+	rm -f $(EXEC) $(OBJECTS)

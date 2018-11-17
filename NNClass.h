@@ -1,6 +1,7 @@
 #pragma once
 
 #include "MatrixClass.h"
+#include <math.h>
 //#include <stdlib.h>
 //#include <time.h>
 

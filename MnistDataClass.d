@@ -1,1 +1,1 @@
-MnistDataClass: MnistDataClass.cpp MnistDataClass.h
+MnistDataClass: MnistDataClass.h
