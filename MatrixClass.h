@@ -25,6 +25,7 @@ public:
 	int getGreatest1DIndex() const;
 	void print(std::ostream &flux) const; // pretty print of the matrix
 	void clear();
+  vector<T> flatten();
 
 	MatrixClass operator*(MatrixClass const &m) const;
 	MatrixClass operator*(double const value);

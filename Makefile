@@ -6,10 +6,14 @@ CC_FLAGS = -w
 EXEC = run
 SOURCES = $(wildcard *.cpp)
 OBJECTS = $(SOURCES:.cpp=.o)
+DEPS = -lCore \
+         -lGraf -lGraf3d -lHist -lHtml -lMatrix -lMinuit \
+         -lPostscript -lProof -lTree \
+         -lGpad -lGui -lGX11 -lRint \
 
 # Main target
 $(EXEC): $(OBJECTS)
-	$(CC) $(OBJECTS) -o $(EXEC)
+	$(CC) $(OBJECTS) -o $(EXEC) $(DEPS)
 
 # To obtain object files
 %.o: %.cpp

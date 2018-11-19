@@ -3,6 +3,18 @@ template<class T>
 MatrixClass<T>::MatrixClass() {}
 
 template<class T>
+vector<T> MatrixClass<T>::flatten(){
+  vector<T> result;
+
+  for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
+			result.push_back(array[i][j]);
+		}
+	}
+  return result;
+}
+
+template<class T>
 int MatrixClass<T>::getGreatest1DIndex() const {
 	assert(height == 1);
 	double test = 0;

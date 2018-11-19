@@ -5,6 +5,9 @@
 #include "NNClass.h"
 #include "NN_TrainerClass.h"
 
+#include "TH2.h"
+#include "TRint.h"
+
 using namespace std;
 
 const double LEARNING_RATE = 2.5;
@@ -13,18 +16,22 @@ const int MINI_BATCH_SIZE = 50;
 const int NUM_EPOCHS = 1;
 
 int main(){
+
+  TRint *gROOT = new TRint("ROOT example", 0, NULL);
+  TH1   *hist  = new TH1D("h1", "h1 title", 500, -1.0, 1.0);
+
 	cout << "Loading MNIST database" << endl;
 	time_t t;
 	srand((unsigned)time(&t));
 
 	MnistDataClass data("train-images.idx3-ubyte", "train-labels.idx1-ubyte");
 	MnistDataClass test("t10k-images.idx3-ubyte","t10k-labels.idx1-ubyte");
-	
+
 	cout << "Initiate Neural Network" << endl;
 	NNClass nn(784, RELU, 10, SIGMOID);
 	nn.addHiddenLayer(40, RELU);
-	nn.addHiddenLayer(20, RELU);
-	nn.addHiddenLayer(16, RELU);
+	//nn.addHiddenLayer(20, RELU);
+	//nn.addHiddenLayer(16, RELU);
 	nn.init();
 
 	NN_TrainerClass trainer(nn);
@@ -54,10 +61,15 @@ int main(){
 		}
 		if (correctNum != nn.compute(test.getPixelData(i))) count++;
 	}
-	cout << count << " of " << test.getNumImages() << " failed: " 
+	cout << count << " of " << test.getNumImages() << " failed: "
 		<< 100*(test.getNumImages() - count) / test.getNumImages() << " pass rate." << endl;
-		
-	cout << "done" << endl;
-	while (1){}
+
+  trainer.plotNNWeights(0, hist);
+
+  cout << endl << "Press 1 to quit." << endl;
+  int exit = 0;
+  while(exit != 1){
+    cin >> exit;
+  }
 	return 1;
 }

@@ -1,5 +1,20 @@
 #include "NN_TrainerClass.h"
 
+void NN_TrainerClass::plotNNWeights(int layer, TH1 *hist){
+  vector<double> temp = nn->weight[layer].flatten();
+
+  for(int i=0;i<temp.size();i++){
+    hist->Fill(temp[i]);
+  }
+  TCanvas *c1 = new TCanvas("c1","Histogram Drawing Options",200,10,700,900);
+  TPad *pad1 = new TPad("pad1",
+     "The pad with the function",0.03,0.62,0.50,0.92);
+  pad1->Draw();
+  hist->Draw();
+  c1->Update();
+}
+
+
 NN_TrainerClass::NN_TrainerClass(NNClass &inNN) {
 	nn = &inNN;
 

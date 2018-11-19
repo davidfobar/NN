@@ -1,1 +1,0 @@
-MnistDataClass: MnistDataClass.h
