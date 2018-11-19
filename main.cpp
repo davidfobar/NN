@@ -7,6 +7,7 @@
 
 #include "TH2.h"
 #include "TRint.h"
+#include "TFile.h"
 
 using namespace std;
 
@@ -17,8 +18,13 @@ const int NUM_EPOCHS = 1;
 
 int main(){
 
-  TRint *gROOT = new TRint("ROOT example", 0, NULL);
+  TRint *gROOT = new TRint("ROOT", 0, NULL);
   TH1   *hist  = new TH1D("h1", "h1 title", 500, -1.0, 1.0);
+  TFile *rFile = new TFile("nn.root", "RECREATE");
+
+  char *buf = "#include \"MatrixClass.h\"";
+  gROOT->ProcessLine("#include <vector>");
+  gROOT->ProcessLine(buf);
 
 	cout << "Loading MNIST database" << endl;
 	time_t t;
@@ -38,7 +44,7 @@ int main(){
 	trainer.setLearningRate(LEARNING_RATE);
 	trainer.setMiniBatchSize(MINI_BATCH_SIZE);
 	trainer.enableMomentum(MOMENTUM_FACTOR);
-
+/*
 	//training
 	for (int i = 0; i < NUM_EPOCHS; i++) {
 		for (int j = 0; j < data.getNumImages() / MINI_BATCH_SIZE; j++) {
@@ -50,7 +56,7 @@ int main(){
 			trainer.updateWeightsAndBiases();
 			cout << "Batch " << j << " of epoch " << i+1 << " complete" << endl;
 		}
-	}
+	}*/
 
 	//assessment
 	int count = 0;
@@ -64,7 +70,9 @@ int main(){
 	cout << count << " of " << test.getNumImages() << " failed: "
 		<< 100*(test.getNumImages() - count) / test.getNumImages() << " pass rate." << endl;
 
-  trainer.plotNNWeights(0, hist);
+  //trainer.plotNNWeights(0, hist);
+  trainer.saveNN(rFile);
+  rFile->Close();
 
   cout << endl << "Press 1 to quit." << endl;
   int exit = 0;

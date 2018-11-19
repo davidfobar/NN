@@ -14,6 +14,11 @@ void NN_TrainerClass::plotNNWeights(int layer, TH1 *hist){
   c1->Update();
 }
 
+void NN_TrainerClass::saveNN(TFile *inFile){
+  inFile->WriteObject(&nn->weight, "weights");
+  inFile->WriteObject(&nn->bias, "biases");
+}
+
 
 NN_TrainerClass::NN_TrainerClass(NNClass &inNN) {
 	nn = &inNN;

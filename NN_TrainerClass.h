@@ -2,13 +2,7 @@
 #include "NNClass.h"
 #include "TH2.h"
 #include "TCanvas.h"
-#include "TSystem.h"
 #include "TFile.h"
-#include "TNtuple.h"
-#include "TPaveLabel.h"
-#include "TPaveText.h"
-#include "TFrame.h"
-#include "TSystem.h"
 
 const double DEFAULT_LEARNING_RATE = 3.0;
 const double DEFAULT_MINIBATCH_SIZE = 1;
@@ -35,5 +29,5 @@ public:
 	void enableMomentum(double in);
 
   void plotNNWeights(int layer, TH1 *hist);
-
+  void saveNN(TFile *inFile);
 };
